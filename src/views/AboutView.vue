@@ -65,7 +65,10 @@
         <tr v-for="item in tasks" :key="item.id">
           <td>{{ item.title }}</td>
           <td>{{ item.status }}</td>
-          <td>
+          <td class="buttons">
+            <v-btn color="surface-variant" @click="toggleStatus(item)">
+              {{ item.status === 'pending' ? 'Mark as Completed' : 'Mark as Pending' }}
+            </v-btn>
             <v-btn color="surface-variant" @click="deleteTask(item.id)">
               <v-icon icon="mdi-trash-can-outline"></v-icon>
             </v-btn>
@@ -127,6 +130,19 @@ export default {
       }
     },
 
+    async toggleStatus(task) {
+      const updatedStatus = task.status === 'pending' ? 'completed' : 'pending'
+      try {
+        await axios.put(`http://localhost:3000/tasks/${task.id}`, {
+          status: updatedStatus,
+        })
+
+        await this.fetchTasks()
+      } catch (error) {
+        console.error('Error toggling task status:', error)
+      }
+    },
+
     async deleteTask(taskId) {
       try {
         await axios.delete(`http://localhost:3000/tasks/${taskId}`)
@@ -157,6 +173,12 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    justify-content: space-evenly;
   }
 }
 </style>
