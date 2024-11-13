@@ -64,12 +64,14 @@
       <tbody>
         <tr v-for="item in tasks" :key="item.id">
           <td>{{ item.title }}</td>
-          <td>{{ item.status }}</td>
-          <td class="buttons">
-            <v-btn color="surface-variant" @click="toggleStatus(item)">
-              {{ item.status === 'pending' ? 'Mark as Completed' : 'Mark as Pending' }}
+          <td>
+            <v-btn color="surface-variant" density="compact" @click="toggleStatus(item)">
+              {{ item.status === 'pending' ? 'Pending' : 'Completed' }}
             </v-btn>
-            <v-btn color="surface-variant" @click="deleteTask(item.id)">
+          </td>
+
+          <td>
+            <v-btn color="surface-variant" density="compact" @click="deleteTask(item.id)">
               <v-icon icon="mdi-trash-can-outline"></v-icon>
             </v-btn>
           </td>
@@ -122,7 +124,7 @@ export default {
         this.newTaskStatus = 'pending'
 
         // Close dialog not working
-        this.isActive.value = false
+        // this.isActive.value = false
 
         await this.fetchTasks()
       } catch (error) {
@@ -177,7 +179,7 @@ export default {
   .buttons {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
+    align-items: center;
     justify-content: space-evenly;
   }
 }
