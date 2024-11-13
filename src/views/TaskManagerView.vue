@@ -37,15 +37,22 @@
                     </v-row>
                   </v-container>
 
-                  <v-btn class="mt-2" type="submit" block>Submit</v-btn>
+                  <v-btn
+                    class="mt-2"
+                    type="submit"
+                    color="primary"
+                    block
+                    @click="isActive.value = false"
+                    >Submit</v-btn
+                  >
                 </v-form>
               </v-sheet>
             </v-card-text>
 
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <!-- <v-spacer></v-spacer>
 
-              <v-btn text="Close Dialog" @click="isActive.value = false"></v-btn>
+              <v-btn text="Close Dialog" @click="isActive.value = false"></v-btn> -->
             </v-card-actions>
           </v-card>
         </template>
@@ -65,13 +72,17 @@
         <tr v-for="item in tasks" :key="item.id">
           <td>{{ item.title }}</td>
           <td>
-            <v-btn color="surface-variant" density="compact" @click="toggleStatus(item)">
+            <v-btn
+              :color="getButtonColor(item.status)"
+              density="compact"
+              @click="toggleStatus(item)"
+            >
               {{ item.status === 'pending' ? 'Pending' : 'Completed' }}
             </v-btn>
           </td>
 
           <td>
-            <v-btn color="surface-variant" density="compact" @click="deleteTask(item.id)">
+            <v-btn color="error" density="compact" @click="deleteTask(item.id)">
               <v-icon icon="mdi-trash-can-outline"></v-icon>
             </v-btn>
           </td>
@@ -100,6 +111,9 @@ export default {
   },
 
   methods: {
+    getButtonColor(status) {
+      return status === 'pending' ? 'error' : 'success'
+    },
     async fetchTasks() {
       try {
         console.log('Fetching tasks...')

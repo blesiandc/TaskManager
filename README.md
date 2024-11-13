@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # TaskManager
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -38,6 +37,5 @@ npm run build
 ```sh
 npm run lint
 ```
-=======
+
 # TaskManager
->>>>>>> 0f09502d863f0ccba5f7d83a3e944e264c089e68
